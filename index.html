@@ -4,64 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>合計金額算出</title>
-    <script type="module">
-        // Firebase SDKのインポート
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-
-        // Firebase構成
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID",
-            measurementId: "YOUR_MEASUREMENT_ID"
-        };
-
-        // Firebaseの初期化
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        // Firestoreにデータを送信する関数
-        async function sendPurchaseDataToFirebase(selectedProducts, totalAmount) {
-            try {
-                await addDoc(collection(db, 'purchases'), { // 'purchases' はコレクション名
-                    products: selectedProducts,
-                    totalAmount: totalAmount,
-                    timestamp: new Date()
-                });
-                alert("購入情報がFirebaseに保存されました！");
-            } catch (error) {
-                console.error("購入情報の保存中にエラーが発生しました:", error);
-                alert("エラー: 購入情報を保存できませんでした");
-            }
-        }
-
-        // 合計金額を計算し、送信処理を実行する関数
-        function handlePayment() {
-            const totalElement = document.getElementById('total');
-            const totalAmount = parseInt(totalElement.textContent.replace('¥', ''));
-
-            if (totalAmount > 0) {
-                // 選択された商品のデータを収集
-                const selectedProducts = [];
-                document.querySelectorAll('.item:checked').forEach((checkbox, index) => {
-                    const productName = checkbox.getAttribute('data-name');
-                    const price = parseInt(checkbox.getAttribute('data-price'));
-                    const quantity = parseInt(document.querySelectorAll('.quantity')[index].value);
-                    selectedProducts.push({ productName, price, quantity });
-                });
-
-                // Firebaseへデータ送信
-                sendPurchaseDataToFirebase(selectedProducts, totalAmount);
-
-                // PayPayにリダイレクト
-                window.location.href = "paypay://";
-            }
-        }
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js"></script>
 </head>
 <body>
     <h2>商品の合計金額を算出</h2>
@@ -99,10 +43,63 @@
         </div>
 
         <h3>合計金額: <span id="total">¥0</span></h3>
-        <button onclick="handlePayment()">PayPayで支払う</button>
+        <button id="payButton">PayPayで支払う</button>
     </div>
 
     <script>
+        // Firebase構成
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            measurementId: "YOUR_MEASUREMENT_ID"
+        };
+
+        // Firebaseの初期化
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Firestoreにデータを送信する関数
+        async function sendPurchaseDataToFirebase(selectedProducts, totalAmount) {
+            try {
+                await db.collection('purchases').add({ // 'purchases' はコレクション名
+                    products: selectedProducts,
+                    totalAmount: totalAmount,
+                    timestamp: new Date()
+                });
+                alert("購入情報がFirebaseに保存されました！");
+            } catch (error) {
+                console.error("購入情報の保存中にエラーが発生しました:", error);
+                alert("エラー: 購入情報を保存できませんでした");
+            }
+        }
+
+        // 合計金額を計算し、送信処理を実行する関数
+        function handlePayment() {
+            const totalElement = document.getElementById('total');
+            const totalAmount = parseInt(totalElement.textContent.replace('¥', ''));
+
+            if (totalAmount > 0) {
+                // 選択された商品のデータを収集
+                const selectedProducts = [];
+                document.querySelectorAll('.item:checked').forEach((checkbox, index) => {
+                    const productName = checkbox.getAttribute('data-name');
+                    const price = parseInt(checkbox.getAttribute('data-price'));
+                    const quantity = parseInt(document.querySelectorAll('.quantity')[index].value);
+                    selectedProducts.push({ productName, price, quantity });
+                });
+
+                // Firebaseへデータ送信
+                sendPurchaseDataToFirebase(selectedProducts, totalAmount);
+
+                // PayPayにリダイレクト
+                window.location.href = "paypay://";
+            }
+        }
+
         // 合計金額を計算する関数
         function calculateTotal() {
             let total = 0;
@@ -132,6 +129,9 @@
 
         // ページ読み込み時にイベントリスナーを設定
         setEventListeners();
+
+        // PayPayボタンのクリックイベントを設定
+        document.getElementById('payButton').addEventListener('click', handlePayment);
     </script>
 </body>
 </html>
