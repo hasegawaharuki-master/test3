@@ -1,91 +1,168 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>飲食店 - トップページ</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-            background-image: url('https://img.freepik.com/free-photo/reflection-garden-landscape-lawn-abstract-background-blue-sky-white-clouds_1417-1030.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #ffffff;
-            text-align: center;
-        }
-
-        header {
-            background: rgba(0, 0, 0, 0.6);
-            padding: 20px;
-            border-bottom: 2px solid #ffffff;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 4em;
-            font-family: 'Brush Script MT', cursive;
-            font-weight: normal;
-            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8);
-        }
-
-        main {
-            margin-top: 50px;
-        }
-
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-            margin-top: 40px;
-        }
-
-        .button-container button {
-            padding: 20px 50px;
-            font-size: 1.8em;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: transform 0.3s, background-color 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .button-container .dine-in {
-            background-color: #4CAF50;
-            color: #fff;
-        }
-
-        .button-container .take-out {
-            background-color: #FFA726;
-            color: #fff;
-        }
-
-        .button-container button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        footer {
-            position: relative;
-            margin-top: 50px;
-            text-align: center;
-            font-size: 0.9em;
-            color: rgba(255, 255, 255, 0.8);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>須田建装</title>
+  <script src="https://www.gstatic.com/firebasejs/9.6.9/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.9/firebase-database.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    header {
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    section {
+      padding: 20px;
+      margin: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2 {
+      margin-bottom: 15px;
+    }
+    .section-content {
+      margin-bottom: 15px;
+    }
+    form input, form textarea, form button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+    form button {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+    form button:hover {
+      background-color: #45a049;
+    }
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+    }
+    .photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>La Belle Cuisine</h1>
-    </header>
-    <main>
-        <div class="button-container">
-            <button class="dine-in" onclick="location.href='test.html'">店内飲食</button>
-            <button class="take-out">お持ち帰り</button>
-        </div>
-    </main>
-    <footer>
-        &copy; 2024 La Belle Cuisine. All rights reserved.
-    </footer>
+  <header>
+    <h1>須田建装</h1>
+    <p>内装業の専門会社</p>
+  </header>
+
+  <!-- 会社概要 -->
+  <section id="company">
+    <h2>会社概要</h2>
+    <div class="section-content">
+      <p><strong>事業内容:</strong> 内装工事、リフォーム、修繕など</p>
+      <p><strong>沿革:</strong> 2000年創業、地域に根付いた内装業</p>
+      <p><strong>資格情報:</strong> 施工管理技士、インテリアコーディネーター資格保持</p>
+      <p><strong>写真:</strong> <img src="your-photo.jpg" alt="施工写真" style="max-width: 100%;"></p>
+    </div>
+  </section>
+
+  <!-- 私たちの想い -->
+  <section id="philosophy">
+    <h2>私たちの想い</h2>
+    <div class="section-content">
+      <p>お客様の生活空間をより快適にするために、常に品質を第一に考えています。お客様との信頼関係を大切にし、丁寧な施工を心掛けています。</p>
+    </div>
+  </section>
+
+  <!-- 施工事例 -->
+  <section id="projects">
+    <h2>施工事例</h2>
+    <div class="section-content">
+      <p>多くの実績がございます。施工例をご覧ください。</p>
+      <img src="project1.jpg" alt="施工事例1" style="width: 100%; border-radius: 8px;">
+      <img src="project2.jpg" alt="施工事例2" style="width: 100%; border-radius: 8px;">
+    </div>
+  </section>
+
+  <!-- お問い合わせフォーム -->
+  <section id="contact">
+    <h2>お問い合わせ</h2>
+    <form id="contact-form">
+      <label for="name">名前:</label>
+      <input type="text" id="name" required><br>
+
+      <label for="phone">電話番号:</label>
+      <input type="text" id="phone" required><br>
+
+      <label for="content">依頼内容:</label>
+      <textarea id="content" required></textarea><br>
+
+      <button type="submit">送信</button>
+    </form>
+  </section>
+
+  <footer>
+    <h3>須田武</h3>
+    <p>電話番号: 090-1234-5678</p>
+    <img src="社長顔写真.jpg" alt="須田武" class="photo">
+  </footer>
+
+  <!-- Firebase 初期化 -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBTnKQqbJ1VwQQeH0TjsBLU9YciODfWz8o",
+      authDomain: "kennkyuu-bb663.firebaseapp.com",
+      databaseURL: "https://kennkyuu-bb663-default-rtdb.firebaseio.com",
+      projectId: "kennkyuu-bb663",
+      storageBucket: "kennkyuu-bb663.firebasestorage.app",
+      messagingSenderId: "697200030354",
+      appId: "1:697200030354:web:84ebd55d17c8b1ced1ec4b",
+      measurementId: "G-Z0Y30DLBKZ"
+    };
+
+    // Firebase 初期化
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.database(app);
+
+    // フォーム送信時の処理
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const content = document.getElementById('content').value;
+
+      // Firebaseにデータ送信
+      const newRequestRef = db.ref('requests').push();
+      newRequestRef.set({
+        name: name,
+        phone: phone,
+        content: content,
+        timestamp: Date.now()
+      })
+      .then(() => {
+        alert("データ送信成功！");
+      })
+      .catch((error) => {
+        console.error("データ送信エラー: ", error);
+        alert("送信エラーが発生しました。");
+      });
+    });
+  </script>
 </body>
 </html>
