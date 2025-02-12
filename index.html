@@ -11,10 +11,14 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
+      background-image: url('https://leapy.jp/wp/wp-content/uploads/2018/03/atelier-nous-780x360.png'); /* 背景画像 */
+      background-size: cover;  /* 画像が画面全体にフィットするように */
+      background-position: center center; /* 画像を中央に配置 */
+      background-attachment: fixed; /* スクロールしても背景が動かないように */
     }
+
     header {
-      background-color: #333;
+      background-color: rgba(51, 51, 51, 0.7); /* 背景色に透明度を追加 */
       color: white;
       padding: 20px;
       text-align: center;
@@ -48,7 +52,7 @@
       background-color: #45a049;
     }
     footer {
-      background-color: #333;
+      background-color: rgba(51, 51, 51, 0.7); /* 背景色に透明度を追加 */
       color: white;
       text-align: center;
       padding: 20px;
@@ -77,7 +81,7 @@
       <p><strong>事業内容:</strong> 内装工事、リフォーム、修繕など</p>
       <p><strong>沿革:</strong> 2000年創業、地域に根付いた内装業</p>
       <p><strong>資格情報:</strong> 施工管理技士、インテリアコーディネーター資格保持</p>
-      <p><strong>写真:</strong> <img src="https://hasegawaharuki-master.github.io/test3/IMG_1483.HEIC" alt="施工写真" style="max-width: 100%;"></p>
+      <p><strong>写真:</strong> <img src="your-photo.jpg" alt="施工写真" style="max-width: 100%;"></p>
     </div>
   </section>
 
@@ -94,8 +98,8 @@
     <h2>施工事例</h2>
     <div class="section-content">
       <p>多くの実績がございます。施工例をご覧ください。</p>
-      <img src="https://hasegawaharuki-master.github.io/test3/IMG_1483.HEIC" alt="施工事例1" style="width: 100%; border-radius: 8px;">
-      <img src="https://hasegawaharuki-master.github.io/test3/IMG_1483.HEIC" alt="施工事例2" style="width: 100%; border-radius: 8px;">
+      <img src="project1.jpg" alt="施工事例1" style="width: 100%; border-radius: 8px;">
+      <img src="project2.jpg" alt="施工事例2" style="width: 100%; border-radius: 8px;">
     </div>
   </section>
 
@@ -119,7 +123,7 @@
   <footer>
     <h3>須田武</h3>
     <p>電話番号: 090-1234-5678</p>
-    <img src="https://hasegawaharuki-master.github.io/test3/IMG_1483.HEIC" alt="須田武" class="photo">
+    <img src="" alt="須田武" class="photo">
   </footer>
 
   <!-- Firebase 初期化 -->
