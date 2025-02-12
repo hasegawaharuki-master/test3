@@ -123,46 +123,47 @@
   </footer>
 
   <!-- Firebase 初期化 -->
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBTnKQqbJ1VwQQeH0TjsBLU9YciODfWz8o",
-      authDomain: "kennkyuu-bb663.firebaseapp.com",
-      databaseURL: "https://kennkyuu-bb663-default-rtdb.firebaseio.com",
-      projectId: "kennkyuu-bb663",
-      storageBucket: "kennkyuu-bb663.firebasestorage.app",
-      messagingSenderId: "697200030354",
-      appId: "1:697200030354:web:84ebd55d17c8b1ced1ec4b",
-      measurementId: "G-Z0Y30DLBKZ"
-    };
+  <script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.9/firebase-app.js';
+  import { getDatabase, ref, set, push } from 'https://www.gstatic.com/firebasejs/9.6.9/firebase-database.js';
 
-    // Firebase 初期化
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.database(app);
+  const firebaseConfig = {
+    apiKey: "AIzaSyBTnKQqbJ1VwQQeH0TjsBLU9YciODfWz8o",
+    authDomain: "kennkyuu-bb663.firebaseapp.com",
+    databaseURL: "https://kennkyuu-bb663-default-rtdb.firebaseio.com",
+    projectId: "kennkyuu-bb663",
+    storageBucket: "kennkyuu-bb663.firebasestorage.app",
+    messagingSenderId: "697200030354",
+    appId: "1:697200030354:web:84ebd55d17c8b1ced1ec4b",
+    measurementId: "G-Z0Y30DLBKZ"
+  };
 
-    // フォーム送信時の処理
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
-      e.preventDefault();
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
 
-      const name = document.getElementById('name').value;
-      const phone = document.getElementById('phone').value;
-      const content = document.getElementById('content').value;
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
 
-      // Firebaseにデータ送信
-      const newRequestRef = db.ref('requests').push();
-      newRequestRef.set({
-        name: name,
-        phone: phone,
-        content: content,
-        timestamp: Date.now()
-      })
-      .then(() => {
-        alert("データ送信成功！");
-      })
-      .catch((error) => {
-        console.error("データ送信エラー: ", error);
-        alert("送信エラーが発生しました。");
-      });
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const content = document.getElementById('content').value;
+
+    const newRequestRef = push(ref(db, 'requests'));
+    set(newRequestRef, {
+      name: name,
+      phone: phone,
+      content: content,
+      timestamp: Date.now()
+    })
+    .then(() => {
+      alert("データ送信成功！");
+    })
+    .catch((error) => {
+      console.error("データ送信エラー: ", error);
+      alert("送信エラーが発生しました。");
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
