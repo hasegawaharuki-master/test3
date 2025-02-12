@@ -68,37 +68,37 @@
     </table>
   </section>
 
-  <script>
-    // Firebaseの設定
-    const firebaseConfig = {
-      apiKey: "AIzaSyBTnKQqbJ1VwQQeH0TjsBLU9YciODfWz8o",
-      authDomain: "kennkyuu-bb663.firebaseapp.com",
-      databaseURL: "https://kennkyuu-bb663-default-rtdb.firebaseio.com",
-      projectId: "kennkyuu-bb663",
-      storageBucket: "kennkyuu-bb663.firebasestorage.app",
-      messagingSenderId: "697200030354",
-      appId: "1:697200030354:web:84ebd55d17c8b1ced1ec4b",
-      measurementId: "G-Z0Y30DLBKZ"
-    };
+ <script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.9/firebase-app.js';
+  import { getDatabase, ref, onChildAdded } from 'https://www.gstatic.com/firebasejs/9.6.9/firebase-database.js';
 
-    // Firebase初期化
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.database(app);
+  const firebaseConfig = {
+    apiKey: "AIzaSyBTnKQqbJ1VwQQeH0TjsBLU9YciODfWz8o",
+    authDomain: "kennkyuu-bb663.firebaseapp.com",
+    databaseURL: "https://kennkyuu-bb663-default-rtdb.firebaseio.com",
+    projectId: "kennkyuu-bb663",
+    storageBucket: "kennkyuu-bb663.firebasestorage.app",
+    messagingSenderId: "697200030354",
+    appId: "1:697200030354:web:84ebd55d17c8b1ced1ec4b",
+    measurementId: "G-Z0Y30DLBKZ"
+  };
 
-    // リアルタイムデータベースから「requests」ノードを監視
-    const requestsRef = db.ref('requests');
-    requestsRef.on('child_added', function(snapshot) {
-      const requestData = snapshot.val();
-      
-      // 新しい行を作成
-      const table = document.getElementById('requestTable').getElementsByTagName('tbody')[0];
-      const newRow = table.insertRow();
-      
-      // 名前、電話番号、依頼内容を追加
-      newRow.insertCell(0).innerText = requestData.name;
-      newRow.insertCell(1).innerText = requestData.phone;
-      newRow.insertCell(2).innerText = requestData.content;
-    });
-  </script>
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const requestsRef = ref(db, 'requests');
+
+  // データが追加されるたびに反応
+  onChildAdded(requestsRef, (snapshot) => {
+    const requestData = snapshot.val();
+    
+    const table = document.getElementById('requestTable').getElementsByTagName('tbody')[0];
+    const newRow = table.insertRow();
+
+    newRow.insertCell(0).innerText = requestData.name;
+    newRow.insertCell(1).innerText = requestData.phone;
+    newRow.insertCell(2).innerText = requestData.content;
+  });
+</script>
+
 </body>
 </html>
