@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お問い合わせ内容一覧</title>
+  <script src="https://www.gstatic.com/firebasejs/9.6.9/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.9/firebase-database.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    header {
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    section {
+      padding: 20px;
+      margin: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2 {
+      margin-bottom: 15px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>お問い合わせ内容一覧</h1>
+    <p>以下は、送信されたお問い合わせ内容です。</p>
+  </header>
+
+  <section>
+    <h2>依頼内容</h2>
+    <table id="requestTable">
+      <thead>
+        <tr>
+          <th>名前</th>
+          <th>電話番号</th>
+          <th>依頼内容</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- ここにFirebaseから取得したデータが表示されます -->
+      </tbody>
+    </table>
+  </section>
+
+  <script>
+    // Firebaseの設定
+    const firebaseConfig = {
+      apiKey: "AIzaSyBTnKQqbJ1VwQQeH0TjsBLU9YciODfWz8o",
+      authDomain: "kennkyuu-bb663.firebaseapp.com",
+      databaseURL: "https://kennkyuu-bb663-default-rtdb.firebaseio.com",
+      projectId: "kennkyuu-bb663",
+      storageBucket: "kennkyuu-bb663.firebasestorage.app",
+      messagingSenderId: "697200030354",
+      appId: "1:697200030354:web:84ebd55d17c8b1ced1ec4b",
+      measurementId: "G-Z0Y30DLBKZ"
+    };
+
+    // Firebase初期化
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.database(app);
+
+    // リアルタイムデータベースから「requests」ノードを監視
+    const requestsRef = db.ref('requests');
+    requestsRef.on('child_added', function(snapshot) {
+      const requestData = snapshot.val();
+      
+      // 新しい行を作成
+      const table = document.getElementById('requestTable').getElementsByTagName('tbody')[0];
+      const newRow = table.insertRow();
+      
+      // 名前、電話番号、依頼内容を追加
+      newRow.insertCell(0).innerText = requestData.name;
+      newRow.insertCell(1).innerText = requestData.phone;
+      newRow.insertCell(2).innerText = requestData.content;
+    });
+  </script>
+</body>
+</html>
