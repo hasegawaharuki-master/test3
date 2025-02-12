@@ -71,6 +71,13 @@
       margin-bottom: 15px;
     }
 
+    /* 会社概要の右横配置 */
+    #company {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
     /* フォームのデザイン */
     form input, form textarea, form button {
       width: 100%;
@@ -126,20 +133,20 @@
 
   <!-- 会社概要 -->
   <section id="company">
-    <h2>会社概要</h2>
-    <div class="section-content">
-      <p><strong>事業内容:</strong> 内装工事、リフォーム、修繕など</p>
-      <p><strong>沿革:</strong> 2000年創業、地域に根付いた内装業</p>
-      <p><strong>資格情報:</strong> 施工管理技士、インテリアコーディネーター資格保持</p>
-      <p><strong>写真:</strong> <img src="your-photo.jpg" alt="施工写真"></p>
+    <div class="left-side">
+      <h2>会社概要</h2>
+      <div class="section-content">
+        <p><strong>事業内容:</strong> 内装工事、リフォーム、修繕など</p>
+        <p><strong>沿革:</strong> 2000年創業、地域に根付いた内装業</p>
+        <p><strong>資格情報:</strong> 施工管理技士、インテリアコーディネーター資格保持</p>
+      </div>
     </div>
-  </section>
-
-  <!-- 私たちの想い -->
-  <section id="philosophy">
-    <h2>私たちの想い</h2>
-    <div class="section-content">
-      <p>お客様の生活空間をより快適にするために、常に品質を第一に考えています。お客様との信頼関係を大切にし、丁寧な施工を心掛けています。</p>
+    <div class="right-side">
+      <h2>連絡先</h2>
+      <div class="section-content">
+        <p><strong>住所:</strong> 東京都渋谷区1-2-3</p>
+        <p><strong>電話番号:</strong> 090-1234-5678</p>
+      </div>
     </div>
   </section>
 
